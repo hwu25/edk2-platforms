@@ -15,8 +15,6 @@
 
 #include "ProcessorSubClass.h"
 
-#include <FrameworkDxe.h>
-
 EFI_HII_HANDLE                  mHiiHandle;
 
 EFI_SMBIOS_PROTOCOL             *mSmbios;
@@ -487,7 +485,7 @@ AddSmbiosProcessorTypeTable (
     PROCESSOR_CHARACTERISTICS_DATA  ProcessorCharacteristics = {{0}};
 
     CHAR16                      *CpuVersion;
-    STRING_REF                  TokenToUpdate;
+    EFI_STRING_ID               TokenToUpdate;
 
     UINT64                      *ProcessorId;
     Type4Record         = NULL;
