@@ -387,6 +387,8 @@ XenonPhySlowMode (
   if (((Timing == SdMmcUhsSdr50) ||
        (Timing == SdMmcUhsSdr25) ||
        (Timing == SdMmcUhsSdr12) ||
+       (Timing == SdMmcSdHs) ||
+       (Timing == SdMmcSdDs) ||
        (Timing == SdMmcMmcHsDdr) ||
        (Timing == SdMmcMmcHsSdr) ||
        (Timing == SdMmcMmcLegacy)) && SlowMode) {
@@ -423,7 +425,7 @@ XenonSetPhy (
   Var &= ~(EMMC5_1_FC_CMD_PD | EMMC5_1_FC_DQ_PD);
   XenonHcRwMmio (PciIo, SD_BAR_INDEX, EMMC_PHY_PAD_CONTROL1, FALSE, SDHC_REG_SIZE_4B, &Var);
 
-  if (Timing == SdMmcUhsSdr12) {
+  if (Timing == SdMmcUhsSdr12 || Timing == SdMmcSdDs) {
     if (SlowMode) {
       XenonHcRwMmio (PciIo, SD_BAR_INDEX, EMMC_PHY_TIMING_ADJUST, TRUE, SDHC_REG_SIZE_4B, &Var);
       Var |= QSN_PHASE_SLOW_MODE_BIT;
@@ -442,7 +444,8 @@ XenonSetPhy (
       (Timing == SdMmcUhsDdr50) ||
       (Timing == SdMmcUhsSdr50) ||
       (Timing == SdMmcUhsSdr104) ||
-      (Timing == SdMmcUhsSdr25)) {
+      (Timing == SdMmcUhsSdr25) ||
+      (Timing == SdMmcSdHs)) {
     Var = ~OUTPUT_QSN_PHASE_SELECT;
     XenonHcAndMmio (PciIo, SD_BAR_INDEX, EMMC_PHY_TIMING_ADJUST, SDHC_REG_SIZE_4B, &Var);
   }
